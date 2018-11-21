@@ -1,12 +1,7 @@
 import {Component} from "react";
 import API from "./API";
-import Form from "reactstrap/src/Form";
-import FormGroup from "reactstrap/src/FormGroup";
-import Label from "reactstrap/src/Label";
-import Input from "reactstrap/src/Input";
-import Button from "reactstrap/src/Button";
+import {Button, Form, FormGroup, Input, Label} from "reactstrap";
 import React from "react";
-
 
 export default class Login extends Component {
     state = {

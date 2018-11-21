@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
-@NoArgsConstructor
 public class UserDto {
     private String login;
     private String email;
@@ -15,6 +14,8 @@ public class UserDto {
         this.email = email;
         this.password = password;
     }
+
+    public UserDto(){}
 
     public String getLogin() {
         return login;
@@ -38,5 +39,14 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

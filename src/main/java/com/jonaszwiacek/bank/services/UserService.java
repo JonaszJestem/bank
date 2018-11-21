@@ -27,6 +27,7 @@ public class UserService {
 
 
     public void signup(UserDto userDto) {
+        System.out.println(userDto);
         if (userRepository.existsByLogin(userDto.getLogin())) {
             throw new UserAlreadyExistException();
         }
@@ -42,7 +43,7 @@ public class UserService {
     public String login(LoginDto loginDetails) {
         User user = userRepository.findByLogin(loginDetails.getLogin());
         if (user != null && user.getPassword().equals(loginDetails.getPassword())) {
-            return "TOKEN";
+            return "{token: TOKEN}";
         }
         throw new UserNotFoundException();
     }

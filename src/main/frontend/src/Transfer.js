@@ -3,10 +3,9 @@ import API from "./API";
 import {Button, Form, FormGroup, Input, Label} from "reactstrap";
 import React from "react";
 
-class Signup extends Component {
+export default class Transfer extends Component {
     state = {
         login: "",
-        email: "",
         password: "",
         response: ""
     };
@@ -14,9 +13,9 @@ class Signup extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const response = API.signup(formData);
+        const response = await API.tranfser(formData);
 
-        this.setState(() => ({response}))
+        this.setState(() => ({message: response.message}))
     };
 
     render() {
@@ -28,10 +27,6 @@ class Signup extends Component {
                     <Input type="text" name="login" id="login" placeholder="Login"/>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input type="email" name="email" id="email" placeholder="Email"/>
-                </FormGroup>
-                <FormGroup>
                     <Label for="password">Password</Label>
                     <Input type="password" name="password" id="password" placeholder="Password"/>
                 </FormGroup>
@@ -40,5 +35,3 @@ class Signup extends Component {
         </>
     }
 }
-
-export default Signup;
