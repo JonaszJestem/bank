@@ -19,15 +19,15 @@ public class UserServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void nonExistingUserDtoCantLogin() {
-        LoginDto loginDto = new LoginDto("login", "password");
+        LoginDto loginDto = new LoginDto("test", "password");
 
         userService.login(loginDto);
     }
 
     @Test
     public void userCanSignup() {
-        UserDto user = new UserDto("login", "email", "password");
-        LoginDto loginDto = new LoginDto("login", "password");
+        UserDto user = new UserDto("test", "email", "password");
+        LoginDto loginDto = new LoginDto("test", "password");
 
         userService.signup(user);
 
@@ -36,8 +36,8 @@ public class UserServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void cantLoginWithInvalidPassword() {
-        UserDto user = new UserDto("login", "email", "password");
-        LoginDto invalidPassword = new LoginDto("login", "invalid");
+        UserDto user = new UserDto("test", "email", "password");
+        LoginDto invalidPassword = new LoginDto("test", "invalid");
 
         userService.signup(user);
 
