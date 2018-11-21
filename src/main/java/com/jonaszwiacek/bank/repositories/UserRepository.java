@@ -5,4 +5,10 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
     User findByLogin(String login);
+
+    User findByResetToken(String resetToken);
+
+    User findByEmail(String email);
+
+    boolean existsByLogin(String login);
 }

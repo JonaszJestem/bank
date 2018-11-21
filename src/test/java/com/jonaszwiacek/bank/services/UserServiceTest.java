@@ -1,16 +1,13 @@
 package com.jonaszwiacek.bank.services;
 
 import com.jonaszwiacek.bank.models.LoginDto;
-import com.jonaszwiacek.bank.models.User;
+import com.jonaszwiacek.bank.models.UserDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,29 +17,29 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void nonExistingUserCantLogin() {
+    public void nonExistingUserDtoCantLogin() {
         LoginDto loginDto = new LoginDto("login", "password");
 
-        assertFalse(userService.login(loginDto));
+        userService.login(loginDto);
     }
 
     @Test
     public void userCanSignup() {
-        User user = new User("login", "email", "password");
+        UserDto user = new UserDto("login", "email", "password");
         LoginDto loginDto = new LoginDto("login", "password");
 
         userService.signup(user);
 
-        assertTrue(userService.login(loginDto));
+        userService.login(loginDto);
     }
 
     @Test
     public void cantLoginWithInvalidPassword() {
-        User user = new User("login", "email", "password");
+        UserDto user = new UserDto("login", "email", "password");
         LoginDto invalidPassword = new LoginDto("login", "invalid");
 
         userService.signup(user);
 
-        assertFalse(userService.login(invalidPassword));
+        userService.login(invalidPassword);
     }
 }

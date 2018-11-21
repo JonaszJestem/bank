@@ -1,18 +1,18 @@
 package com.jonaszwiacek.bank.models;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
-@Getter
-@Setter
-public class LoginDto {
+public class UserDto {
     private String login;
+    private String email;
     private String password;
 
-    public LoginDto(String login, String password) {
+    public UserDto(@NotBlank String login, @NotBlank String email, @NotBlank String password) {
         this.login = login;
+        this.email = email;
         this.password = password;
     }
 
@@ -20,12 +20,20 @@ public class LoginDto {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {

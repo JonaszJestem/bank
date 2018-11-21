@@ -4,6 +4,7 @@ import com.jonaszwiacek.bank.models.Transfer;
 import com.jonaszwiacek.bank.models.User;
 import com.jonaszwiacek.bank.repositories.InMemoryTransfers;
 import com.jonaszwiacek.bank.repositories.TransferRepository;
+import com.jonaszwiacek.bank.services.exceptions.NoTranfserFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,10 @@ public class TransferService {
     public void transfer(Transfer transfer) {
         String email = transfer.getEmail();
         Transfer confirmedTransfer = inMemoryTransfers.findByEmail(email);
-        transferRepository.save(confirmedTransfer);
+        if(confirmedTransfer != null) {
+            transferRepository.save(confirmedTransfer);
+        }
+        throw new NoTranfserFoundException();
     }
 
     public void saveTemporary(Transfer transfer) {
