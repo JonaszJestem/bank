@@ -5,6 +5,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import Home from "./Home";
 import Signup from "./Signup";
 import Login from "./Login";
+import Transfer from "./Transfer";
 
 class App extends Component {
     state = {
@@ -31,6 +32,8 @@ class App extends Component {
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/login" component={() => <Login setToken={this.setJWTToken}/>}/>
                         <Route path="/registration" component={Signup}/>
+                        <Route path="/history" component={History}/>
+                        <Route path="/transfer" component={Transfer}/>
                     </>
                 </BrowserRouter>
             </div>

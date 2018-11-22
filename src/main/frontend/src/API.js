@@ -29,9 +29,41 @@ export default class API {
 
     static convertToObject(formData) {
         var object = {};
-        formData.forEach(function(value, key){
+        formData.forEach(function (value, key) {
             object[key] = value;
         });
         return object;
     }
+
+    static async history(data) {
+        const response = {
+            json: () => ({history})
+        };
+
+        return new Promise((resolve) => {
+            return response
+        })
+    }
 }
+
+const history = [{
+    title: "Tytuł 1",
+    amount: 1000,
+    date: "10/12/2018",
+    author: "osoba1",
+}, {
+    title: "Tytuł 2",
+    amount: 500,
+    date: "10/12/2018",
+    author: "osoba1",
+}, {
+    title: "Tytuł 3",
+    amount: 200,
+    date: "10/12/2018",
+    author: "osoba1",
+}, {
+    title: "Tytuł 4",
+    amount: 1200,
+    date: "10/12/2018",
+    author: "osoba1",
+}];

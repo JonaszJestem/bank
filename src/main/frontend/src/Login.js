@@ -5,8 +5,6 @@ import React from "react";
 
 export default class Login extends Component {
     state = {
-        login: "",
-        password: "",
         response: ""
     };
 

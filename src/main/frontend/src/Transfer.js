@@ -5,8 +5,6 @@ import React from "react";
 
 export default class Transfer extends Component {
     state = {
-        login: "",
-        password: "",
         response: ""
     };
 
