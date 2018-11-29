@@ -1,11 +1,13 @@
 package com.jonaszwiacek.bank.controllers;
 
-import com.jonaszwiacek.bank.models.LoginDto;
-import com.jonaszwiacek.bank.models.UserDto;
+import com.jonaszwiacek.bank.models.LoginRequest;
+import com.jonaszwiacek.bank.models.SignUpRequest;
 import com.jonaszwiacek.bank.services.UserService;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -20,27 +22,27 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public String signup(@RequestBody @Valid UserDto user) {
-        userService.signup(user);
+    public String signup(@RequestBody SignUpRequest signUpRequest) {
+        userService.signup(signUpRequest);
         return "OK.";
     }
 
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto) {
-        return userService.login(loginDto);
+    @PostMapping(value = "/login", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String login(@RequestBody LoginRequest loginRequest) {
+        return "{\"token\": \"" + userService.login(loginRequest) + "\"}";
     }
 
 
-    @PostMapping("/callPasswordReset")
-    public void callReset(@RequestBody String email) {
-        userService.callPasswordReset(email);
-    }
-
-
-    @PostMapping("/resetPassword/{resetToken}")
-    public void login(@PathVariable String resetToken, @RequestBody String newPassword) {
-        userService.resetPassword(resetToken, newPassword);
-    }
+//    @PostMapping("/callPasswordReset")
+//    public void callReset(@RequestBody String email) {
+//        userService.callPasswordReset(email);
+//    }
+//
+//
+//    @PostMapping("/resetPassword/{resetToken}")
+//    public void login(@PathVariable String resetToken, @RequestBody String newPassword) {
+//        userService.resetPassword(resetToken, newPassword);
+//    }
 
 }

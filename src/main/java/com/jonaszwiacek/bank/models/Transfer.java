@@ -12,6 +12,7 @@ public class Transfer {
     Long id;
 
     private String email;
+    private String username;
     private String title;
     private String amount;
 
@@ -45,5 +46,24 @@ public class Transfer {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Transfer{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", title='" + title + '\'' +
+                ", amount='" + amount + '\'' +
+                '}';
     }
 }

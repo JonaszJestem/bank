@@ -3,12 +3,10 @@ package com.jonaszwiacek.bank.repositories;
 import com.jonaszwiacek.bank.models.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends CrudRepository<User, Long> {
-    User findByLogin(String login);
+    Optional<User> findByUsernameOrEmail(String username, String email);
 
-    User findByResetToken(String resetToken);
-
-    User findByEmail(String email);
-
-    boolean existsByLogin(String login);
+    boolean existsByUsernameOrEmail(String username, String email);
 }

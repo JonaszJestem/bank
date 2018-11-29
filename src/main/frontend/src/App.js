@@ -5,12 +5,10 @@ import {BrowserRouter, Route} from "react-router-dom";
 import Home from "./Home";
 import Signup from "./Signup";
 import Login from "./Login";
+import History from "./History";
+import Transfer from "./Transfer";
 
 class App extends Component {
-    state = {
-        token: ""
-    };
-
     render() {
         return (
             <div className="App mx-auto col-md-8">
@@ -19,6 +17,12 @@ class App extends Component {
                         <Navbar color="light">
                             <NavbarBrand href="/">Bank</NavbarBrand>
                             <Nav>
+                                <NavItem>
+                                    <NavLink href="/transfer">Przelew</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink href="/history">Historia</NavLink>
+                                </NavItem>
                                 <NavItem>
                                     <NavLink href="/login">Logowanie</NavLink>
                                 </NavItem>
@@ -29,17 +33,14 @@ class App extends Component {
                         </Navbar>
 
                         <Route exact path="/" component={Home}/>
-                        <Route exact path="/login" component={() => <Login setToken={this.setJWTToken}/>}/>
+                        <Route exact path="/login" component={Login}/>
+                        <Route exact path="/history" component={History}/>
+                        <Route exact path="/transfer" component={Transfer}/>
                         <Route path="/registration" component={Signup}/>
                     </>
                 </BrowserRouter>
             </div>
         );
-    }
-
-    setJWTToken = (token) => {
-        console.log("Setting token!");
-        this.setState(() => ({token}));
     }
 }
 

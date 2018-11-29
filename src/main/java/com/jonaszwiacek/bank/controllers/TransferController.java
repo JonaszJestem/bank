@@ -1,8 +1,10 @@
 package com.jonaszwiacek.bank.controllers;
 
 import com.jonaszwiacek.bank.models.Transfer;
-import com.jonaszwiacek.bank.models.User;
+import com.jonaszwiacek.bank.security.CurrentUser;
+import com.jonaszwiacek.bank.security.UserPrincipal;
 import com.jonaszwiacek.bank.services.TransferService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,17 +20,21 @@ public class TransferController {
     }
 
     @PostMapping("/perform")
-    public void performTransfer(@RequestBody Transfer transfer) {
-        transferService.transfer(transfer);
+    @Secured({"ROLE_USER"})
+    public String performTransfer(@CurrentUser UserPrincipal currentUserr) {
+        return transferService.transfer(currentUserr);
     }
 
     @PostMapping("/saveForConfirmation")
-    public void saveTransfer(@RequestBody Transfer transfer) {
-        transferService.saveTemporary(transfer);
+    @Secured({"ROLE_USER"})
+    public Transfer saveTransfer(@CurrentUser UserPrincipal currentUser, @RequestBody Transfer transfer) {
+        transferService.saveTemporary(currentUser, transfer);
+        return transfer;
     }
 
     @GetMapping
-    public List<Transfer> getTransferHistory(@RequestBody User user) {
-        return transferService.getHistory(user);
+    @Secured({"ROLE_USER"})
+    public List<Transfer> getTransferHistory(@CurrentUser UserPrincipal currentUser) {
+        return transferService.getHistory(currentUser);
     }
 }

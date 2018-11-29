@@ -4,5 +4,7 @@ import com.jonaszwiacek.bank.models.Transfer;
 import org.springframework.data.repository.CrudRepository;
 
 public interface InMemoryTransfers extends CrudRepository<Transfer, Long> {
-    Transfer findByEmail(String email);
+    Transfer findByEmailOrUsername(String email, String username);
+
+    void deleteByUsernameOrEmail(String username, String email);
 }
