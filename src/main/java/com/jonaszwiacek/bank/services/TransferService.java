@@ -1,5 +1,6 @@
 package com.jonaszwiacek.bank.services;
 
+import com.jonaszwiacek.bank.models.InMemoryTransfer;
 import com.jonaszwiacek.bank.models.Transfer;
 import com.jonaszwiacek.bank.repositories.InMemoryTransfers;
 import com.jonaszwiacek.bank.repositories.TransferRepository;
@@ -30,16 +31,15 @@ public class TransferService {
 
     @Transactional
     public String transfer(UserPrincipal currentUser) {
-        Transfer confirmedTransfer = inMemoryTransfers.findByEmailOrUsername(currentUser.getEmail(), currentUser.getUsername());
-        System.out.println(currentUser);
-        System.out.println(confirmedTransfer);
+        InMemoryTransfer confirmedTransfer = inMemoryTransfers.findByEmailOrUsername(currentUser.getEmail(), currentUser.getUsername());
         if (confirmedTransfer != null) {
-            Transfer transfer = new Transfer();
-            transfer.setEmail(confirmedTransfer.getEmail());
-            transfer.setUsername(confirmedTransfer.getUsername());
-            transfer.setTitle(confirmedTransfer.getTitle());
-            transfer.setAmount(confirmedTransfer.getAmount());
             inMemoryTransfers.deleteByUsernameOrEmail(confirmedTransfer.getUsername(), confirmedTransfer.getEmail());
+
+            Transfer transfer = new Transfer();
+            transfer.setAmount(confirmedTransfer.getAmount());
+            transfer.setTitle(confirmedTransfer.getTitle());
+            transfer.setUsername(confirmedTransfer.getUsername());
+            transfer.setEmail(confirmedTransfer.getEmail());
             transferRepository.save(transfer);
             return "{\"message\": \"OK.\"}";
         } else {
@@ -48,13 +48,12 @@ public class TransferService {
     }
 
     @Transactional
-    public void saveTemporary(UserPrincipal currentUser, Transfer transfer) {
+    public void saveTemporary(UserPrincipal currentUser, InMemoryTransfer transfer) {
         String username = currentUser.getUsername();
-        transfer.setUsername(username);
         String email = currentUser.getEmail();
+        transfer.setUsername(username);
         transfer.setEmail(email);
-        System.out.println(currentUser);
-        System.out.println(transfer);
+
         inMemoryTransfers.deleteByUsernameOrEmail(username, email);
         inMemoryTransfers.save(transfer);
     }

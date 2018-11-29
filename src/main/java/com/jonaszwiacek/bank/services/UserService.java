@@ -63,6 +63,7 @@ public class UserService {
         user.setRoles(Collections.singleton(userRole));
 
         userRepository.save(user);
+        System.out.println(userRepository.findAll());
     }
 
 
