@@ -9,14 +9,13 @@ export default class API {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response);
         return await response.json();
     }
 
     static async signup(data) {
         data = this.convertToObject(data);
         console.log(data);
-        const response = await fetch("https://localhost:8443/user/register", {
+        const response = await fetch("https://localhost:8443/user/signup", {
             body: JSON.stringify(data),
             method: "POST",
             headers: {
@@ -27,43 +26,48 @@ export default class API {
         return await response.json();
     }
 
+
+    static async saveForConfirmation(data) {
+        data = this.convertToObject(data);
+        console.log(data);
+        const response = await fetch("https://localhost:8443/transfer/saveForConfirmation", {
+            body: JSON.stringify(data),
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+            }
+        });
+        console.log(response);
+        return await response.json();
+    }
+
+
+    static async confirm() {
+        const response = await fetch("https://localhost:8443/transfer/perform", {
+            method: "POST",
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+            }
+        });
+        return await response.json();
+    }
+
+
+    static async history() {
+        const response = await fetch("https://localhost:8443/transfer", {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+            }
+        });
+        return await response.json();
+    }
+
     static convertToObject(formData) {
         var object = {};
-        formData.forEach(function (value, key) {
+        formData.forEach(function(value, key){
             object[key] = value;
         });
         return object;
     }
-
-    static async history(data) {
-        const response = {
-            json: () => ({history})
-        };
-
-        return new Promise((resolve) => {
-            return response
-        })
-    }
 }
-
-const history = [{
-    title: "Tytuł 1",
-    amount: 1000,
-    date: "10/12/2018",
-    author: "osoba1",
-}, {
-    title: "Tytuł 2",
-    amount: 500,
-    date: "10/12/2018",
-    author: "osoba1",
-}, {
-    title: "Tytuł 3",
-    amount: 200,
-    date: "10/12/2018",
-    author: "osoba1",
-}, {
-    title: "Tytuł 4",
-    amount: 1200,
-    date: "10/12/2018",
-    author: "osoba1",
-}];

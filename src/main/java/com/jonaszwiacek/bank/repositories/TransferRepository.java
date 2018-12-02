@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface TransferRepository extends CrudRepository<Transfer, Long> {
-    List<Transfer> findByEmail(String email);
+    Iterable<Transfer> findAllByEmailOrUsername(String email, String username);
 }

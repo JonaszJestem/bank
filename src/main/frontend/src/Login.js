@@ -12,9 +12,9 @@ export default class Login extends Component {
         event.preventDefault();
         const formData = new FormData(event.target);
         const response = await API.login(formData);
-
-        if (response.status === 200) {
-            this.props.setToken(response.payload);
+        console.log(response)
+        if (response) {
+            sessionStorage.setItem("token", response.token)
         }
 
         this.setState(() => ({message: response.message}))
@@ -25,8 +25,8 @@ export default class Login extends Component {
             {this.state.response}
             <Form className="mx-auto col-md-6" method="POST" onSubmit={this.handleSubmit}>
                 <FormGroup>
-                    <Label for="login">Login</Label>
-                    <Input type="text" name="login" id="login" placeholder="Login"/>
+                    <Label for="usernameOrEmail">Login or email</Label>
+                    <Input type="text" name="usernameOrEmail" id="usernameOrEmail" placeholder="Login"/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="password">Password</Label>

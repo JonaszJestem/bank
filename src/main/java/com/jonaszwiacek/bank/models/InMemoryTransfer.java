@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Transfer {
+public class InMemoryTransfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

@@ -5,9 +5,6 @@ import React from "react";
 
 class Signup extends Component {
     state = {
-        login: "",
-        email: "",
-        password: "",
         response: ""
     };
 
@@ -15,8 +12,7 @@ class Signup extends Component {
         event.preventDefault();
         const formData = new FormData(event.target);
         const response = API.signup(formData);
-
-        this.setState(() => ({response}))
+        this.setState(() => ({response: response}))
     };
 
     render() {
@@ -24,8 +20,8 @@ class Signup extends Component {
             {this.state.response}
             <Form className="mx-auto col-md-6" method="POST" onSubmit={this.handleSubmit}>
                 <FormGroup>
-                    <Label for="login">Login</Label>
-                    <Input type="text" name="login" id="login" placeholder="Login"/>
+                    <Label for="username">Login</Label>
+                    <Input type="text" name="username" id="username" placeholder="Login"/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="email">Email</Label>
