@@ -11,6 +11,18 @@ export default class API {
         });
         return await response.json();
     }
+    static async reset(data) {
+        data = this.convertToObject(data);
+        console.log(data);
+        const response = await fetch("https://localhost:8443/user/callPasswordReset", {
+            body: data.email,
+            method: "POST",
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        });
+        return response;
+    }
 
     static async signup(data) {
         data = this.convertToObject(data);
@@ -60,7 +72,12 @@ export default class API {
                 'Authorization': 'Bearer ' + sessionStorage.getItem("token")
             }
         });
-        return await response.json();
+        let content = await response.json();
+        console.log(content)
+        if(content.status && content.status === 401) {
+            return [];
+        }
+        return content;
     }
 
     static convertToObject(formData) {

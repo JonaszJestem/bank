@@ -20,6 +20,14 @@ export default class Login extends Component {
         this.setState(() => ({message: response.message}))
     };
 
+    handleReset = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const response = await API.reset(formData);
+        console.log(response);
+
+    };
+
     render() {
         return <>
             {this.state.response}
@@ -33,7 +41,17 @@ export default class Login extends Component {
                     <Input type="password" name="password" id="password" placeholder="Password"/>
                 </FormGroup>
                 <Button>Submit</Button>
+
             </Form>
+            <Form className="mx-auto col-md-6" method="POST" onSubmit={this.handleReset}>
+                <FormGroup>
+                    <Label for="email">email</Label>
+                    <Input type="email" name="email" id="email" placeholder="email"/>
+                </FormGroup>
+                <Button>Reset password</Button>
+
+            </Form>
+
         </>
     }
 }

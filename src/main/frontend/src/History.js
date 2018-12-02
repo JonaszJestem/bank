@@ -10,16 +10,21 @@ class History extends Component {
 
     async componentDidMount() {
         const transfers = await API.history();
-        console.log(transfers)
+        console.log(transfers);
         if (transfers) {
             this.setState(() => ({transfers: transfers}))
         }
     }
 
     render() {
-        let history = this.state.transfers.map((tranfser) => {
-            return <TransferItem key={tranfser.id} id={tranfser.id} title={tranfser.title} amount={tranfser.amount}/>
-        });
+        let history = "";
+        if (this.state.transfers) {
+            console.log("STATE TRANSFERS: " + this.state.transfers);
+            history = this.state.transfers.map((tranfser) => {
+                return <TransferItem key={tranfser.id} id={tranfser.id} title={tranfser.title}
+                                     amount={tranfser.amount}/>
+            });
+        }
         return <ListGroup>
             {history}
         </ListGroup>

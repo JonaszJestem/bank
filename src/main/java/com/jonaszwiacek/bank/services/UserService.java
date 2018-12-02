@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 
 @Service
@@ -83,32 +84,26 @@ public class UserService {
         return token;
     }
 
+    public void callPasswordReset(String email) {
+        System.out.println(email);
+        Optional<User> user = userRepository.findByEmail(email);
+        System.out.println(user);
+        if(user.isPresent()) {
+            User retrievedUser = user.get();
+            String resetToken = ResetTokenGenerator.nextPassword();
+            retrievedUser.setResetToken(resetToken);
+            System.out.println(resetToken);
+            userRepository.save(retrievedUser);
+        }
+    }
 
-//    public void callPasswordReset(String email) {
-//        User user = userRepository.findByEmail(email);
-//
-//        if (user != null) {
-//            String token = ResetTokenGenerator.nextPassword();
-//            user.setResetToken(token);
-//            user.setResetTimestamp(new Date());
-//
-//            emailSender.sendResetToken(email, token);
-//            userRepository.save(user);
-//        }
-//    }
-//
-//
-//    public void resetPassword(String resetToken, String newPassword) {
-//        if (resetToken.isEmpty()) {
-//            return;
-//        }
-//
-//        User user = userRepository.findByResetToken(resetToken);
-//
-//        if (user != null) {
-//            user.setResetToken("");
-//            user.setPassword(newPassword);
-//            userRepository.save(user);
-//        }
-//    }
+    public void resetPassword(String resetToken, String newPassword) {
+        Optional<User> user = userRepository.findByResetToken(resetToken);
+        if(user.isPresent()) {
+            User retrievedUser = user.get();
+            retrievedUser.setPassword(passwordEncoder.encode(newPassword));
+            retrievedUser.setResetToken(null);
+            userRepository.save(retrievedUser);
+        }
+    }
 }

@@ -12,6 +12,7 @@ export default class Transfer extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
+        console.log(formData)
         const response = await API.saveForConfirmation(formData);
         console.log(response);
         this.setState(() => ({response}))
@@ -21,9 +22,9 @@ export default class Transfer extends Component {
         let response = "";
 
         if(this.state.response) {
-            response = <div>Data from server:
+            response = <div id="from-server">Data from server:
                 <p>{this.state.response.title}</p>
-                <p>{this.state.response.amount}</p>
+                <p id="response_amount">{this.state.response.amount}</p>
                 <Button onClick={this.confirm}>Confirm</Button>
             </div>
         }
@@ -33,13 +34,13 @@ export default class Transfer extends Component {
         }
         return <>
             {response}
-            <Form className="mx-auto col-md-6" method="POST" onSubmit={this.handleSubmit}>
+            <Form id="transfer" className="mx-auto col-md-6" method="POST" onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <Label for="title">Tytuł</Label>
                     <Input type="text" name="title" id="title" placeholder="Tytuł"/>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="amount">Wartość</Label>
+                    <Label id="value-label" for="amount">Wartość</Label>
                     <Input type="text" name="amount" id="amount" placeholder="Wartość"/>
                 </FormGroup>
                 <Button>Submit</Button>
