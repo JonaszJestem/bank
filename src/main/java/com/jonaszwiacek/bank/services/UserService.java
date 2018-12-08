@@ -45,6 +45,10 @@ public class UserService {
         signUpRequest.setUsername("login");
         signUpRequest.setPassword("password");
         signup(signUpRequest);
+        signUpRequest.setEmail("admin@email.com");
+        signUpRequest.setUsername("admin");
+        signUpRequest.setPassword("password");
+        signup(signUpRequest, RoleName.ROLE_ADMIN);
     }
 
 
@@ -64,7 +68,25 @@ public class UserService {
         user.setRoles(Collections.singleton(userRole));
 
         userRepository.save(user);
-        System.out.println(userRepository.findAll());
+    }
+
+
+    private void signup(SignUpRequest signUpRequest, RoleName roleName) {
+        if (userRepository.existsByUsernameOrEmail(signUpRequest.getUsername(), signUpRequest.getEmail())) {
+            throw new UserAlreadyExistException();
+        }
+
+        User user = new User(signUpRequest.getUsername(),
+                signUpRequest.getEmail(), signUpRequest.getPassword());
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Role role = roleRepository.findByName(roleName)
+                .orElseThrow(UserNotFoundException::new);
+
+        user.setRoles(Collections.singleton(role));
+
+        userRepository.save(user);
     }
 
 
@@ -88,7 +110,7 @@ public class UserService {
         System.out.println(email);
         Optional<User> user = userRepository.findByEmail(email);
         System.out.println(user);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             User retrievedUser = user.get();
             String resetToken = ResetTokenGenerator.nextPassword();
             retrievedUser.setResetToken(resetToken);
@@ -99,7 +121,7 @@ public class UserService {
 
     public void resetPassword(String resetToken, String newPassword) {
         Optional<User> user = userRepository.findByResetToken(resetToken);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             User retrievedUser = user.get();
             retrievedUser.setPassword(passwordEncoder.encode(newPassword));
             retrievedUser.setResetToken(null);

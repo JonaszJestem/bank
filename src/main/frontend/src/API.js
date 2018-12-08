@@ -80,6 +80,33 @@ export default class API {
         return content;
     }
 
+    static async adminTransfers() {
+        const response = await fetch("https://localhost:8443/admin", {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+            }
+        });
+        let content = await response.json();
+        console.log(content);
+        if(content.status && content.status === 401) {
+            return [];
+        }
+        return content;
+    }
+
+
+    static async adminConfirm(transferId) {
+        const response = await fetch("https://localhost:8443/admin/confirm", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+            },
+            body: JSON.stringify(transferId)
+        });
+        return await response.json();
+    }
+
     static convertToObject(formData) {
         var object = {};
         formData.forEach(function(value, key){

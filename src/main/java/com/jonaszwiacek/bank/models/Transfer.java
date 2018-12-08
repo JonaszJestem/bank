@@ -15,6 +15,15 @@ public class Transfer {
     private String username;
     private String title;
     private String amount;
+    private boolean confirmedByAdmin;
+
+    public boolean isConfirmedByAdmin() {
+        return confirmedByAdmin;
+    }
+
+    public void setConfirmedByAdmin(boolean confirmedByAdmin) {
+        this.confirmedByAdmin = confirmedByAdmin;
+    }
 
     public Long getId() {
         return id;

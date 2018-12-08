@@ -5,7 +5,7 @@ class TransferItem extends Component {
 
     render() {
         return (
-            <ListGroupItem>{this.props.title} : {this.props.amount}</ListGroupItem>
+            <ListGroupItem>Id: {this.props.id} Title: {this.props.title} Amount: {this.props.amount} Confirmed: {this.props.confirmedByAdmin.toString()}</ListGroupItem>
         );
     }
 }

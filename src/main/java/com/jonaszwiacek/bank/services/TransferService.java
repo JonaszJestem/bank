@@ -9,8 +9,10 @@ import com.jonaszwiacek.bank.services.exceptions.NoTranfserFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.function.Predicate.not;
 
 @Service
 public class TransferService {
@@ -21,12 +23,14 @@ public class TransferService {
         this.transferRepository = transferRepository;
         this.inMemoryTransfers = inMemoryTransfers;
 
-        Transfer transfer = new Transfer();
-        transfer.setAmount("100");
-        transfer.setEmail("email@email.com");
-        transfer.setTitle("title");
-        transfer.setUsername("login");
-        transferRepository.save(transfer);
+        for (int i = 0; i < 10; i++) {
+            Transfer transfer = new Transfer();
+            transfer.setAmount(String.valueOf(new Random().nextInt(1000)));
+            transfer.setEmail("email@email.com");
+            transfer.setTitle("title");
+            transfer.setUsername("login");
+            transferRepository.save(transfer);
+        }
     }
 
     @Transactional
@@ -64,5 +68,22 @@ public class TransferService {
         history.forEach(result::add);
         System.out.println(result);
         return result;
+    }
+
+    public void confirmTransfer(long transferId) {
+        Optional<Transfer> transfer = transferRepository.findById(transferId);
+        if (transfer.isPresent()) {
+            Transfer retrievedTransfer = transfer.get();
+            retrievedTransfer.setConfirmedByAdmin(true);
+            transferRepository.save(retrievedTransfer);
+        }
+    }
+
+    public List<Transfer> getUnconfirmedTransfers() {
+        Iterable<Transfer> history = transferRepository.findAll();
+        List<Transfer> result = new ArrayList<>();
+        history.forEach(result::add);
+
+        return result.stream().filter(not(Transfer::isConfirmedByAdmin)).collect(Collectors.toList());
     }
 }

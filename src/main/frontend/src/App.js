@@ -7,6 +7,7 @@ import Signup from "./Signup";
 import Login from "./Login";
 import History from "./History";
 import Transfer from "./Transfer";
+import Admin from "./Admin";
 
 class App extends Component {
     render() {
@@ -29,6 +30,9 @@ class App extends Component {
                                 <NavItem>
                                     <NavLink href="/registration">Rejestracja</NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink href="/admin">Admin</NavLink>
+                                </NavItem>
                             </Nav>
                         </Navbar>
 
@@ -37,6 +41,7 @@ class App extends Component {
                         <Route exact path="/history" component={History}/>
                         <Route exact path="/transfer" component={Transfer}/>
                         <Route path="/registration" component={Signup}/>
+                        <Route path="/admin" component={Admin}/>
                     </>
                 </BrowserRouter>
             </div>
