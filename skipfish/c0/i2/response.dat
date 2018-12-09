@@ -1,0 +1,12 @@
+HTTP/1.1 404 
+Cache-Control: private
+Expires: Thu, 01 Jan 1970 00:00:00 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000 ; includeSubDomains
+X-Frame-Options: DENY
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Sat, 08 Dec 2018 16:42:20 GMT
+
+{"timestamp":"2018-12-08T16:42:20.858+0000","status":404,"error":"Not Found","message":"No message available","path":"/sfi9876"}
